@@ -45,7 +45,7 @@ const schema = yup.object().shape({
             <Input {...register("email")} type="email" placeholder="test@gmail.com" />
             <p style={{ color: "red", fontSize: "12px" }}>{errors.email?.message}</p>
             <br />
-            <Button type="submit">Send Reset Password Link</Button>
+            <Button type="submit">Send The Reset link</Button>
             <Paragraph>
               Don't have an account? <Link to="/signup">Sign Up</Link>
             </Paragraph>
