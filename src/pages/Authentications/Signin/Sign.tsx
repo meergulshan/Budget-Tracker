@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import Input from "../../../Components/InputField/Input";
 import Navbar from "../../../Components/Navbar/Navbar";
 import Checkbox from "../../../Components/Checkbox/Checkbox";
@@ -21,7 +21,7 @@ import {
   SigninImageContainer,
 } from "./Signin.styles";
 
-// ✅ Define schema once, outside the component
+// ✅ Define schema once
 const schema = yup.object().shape({
   email: yup.string().email("Invalid email format (Hint! Must contain @)").required("Email is required"),
   password: yup
@@ -29,18 +29,20 @@ const schema = yup.object().shape({
     .min(8, "Password must be at least 8 characters")
     .max(32, "Password cannot exceed 32 characters")
     .required("Password is required"),
-
 });
 
 const Sign = () => {
-  // ✅ Use the schema without redefining it
-  const { register, handleSubmit, formState: { errors, isValid }, reset } = useForm({
+  const navigate = useNavigate(); // Initialize useNavigate
+
+  const { register, handleSubmit, formState: { errors }, reset } = useForm({
     resolver: yupResolver(schema),
     mode: "all",
   });
 
   const onSubmitHandler = () => {
+    console.log("User Data:");
     reset();
+    navigate("/HomePage"); // Redirect to Dashboard after signing in
   };
 
   return (
@@ -69,7 +71,7 @@ const Sign = () => {
             </ForgotPassword>
           </CheckboxContainer>
 
-          <Button disabled={!isValid}>Sign in</Button>
+          <Button type="submit">Sign in</Button> {/* Button inside form to trigger submit */}
           <Paragraph>
             <p>Don't have an account? <Link to="/signup">Sign Up</Link></p>
           </Paragraph>
